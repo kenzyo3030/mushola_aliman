@@ -85,22 +85,23 @@ async function ensureInitialized(db) {
   }
 
   // PRAYER SCHEDULE
-  const schedule = await db.collection('prayer_schedule').findOne()
-
+  const schedule = await db.collection('prayer_schedule').findOne({});
   if (!schedule) {
-
     await db.collection('prayer_schedule').insertOne({
-
       id: uuidv4(),
       fajr: '04:30',
       dhuhr: '12:00',
       asr: '15:15',
       maghrib: '18:05',
       isha: '19:15',
+      jumuah: '12:00',
+      subuhJamaah: '04:45',
+      dzuhurJamaah: '12:15',
+      asrJamaah: '15:30',
+      maghribJamaah: '18:10',
+      isyaJamaah: '19:30',
       updatedAt: new Date()
-
-    })
-
+    });
   }
 
   // SOCIAL MEDIA
