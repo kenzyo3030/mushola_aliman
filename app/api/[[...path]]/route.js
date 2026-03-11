@@ -42,7 +42,9 @@ async function ensureInitialized(db) {
 
     for (const u of users) {
 
-      const hash = crypto.createHash('sha256').update(u.password).digest('hex')
+      const hash = crypto.createHash('sha256')
+        .update(u.password)
+        .digest('hex')
 
       await db.collection('admin').insertOne({
         id: uuidv4(),
@@ -62,6 +64,7 @@ async function ensureInitialized(db) {
   if (!profile) {
 
     await db.collection('mosque_profile').insertOne({
+
       id: uuidv4(),
       name: 'Mushola Al-Iman',
       arabicName: 'مسجد الإخلاص',
@@ -76,6 +79,7 @@ async function ensureInitialized(db) {
       vision: 'Menjadi mushola yang membawa rahmat bagi masyarakat',
       mission: 'Membangun generasi Qurani',
       updatedAt: new Date()
+
     })
 
   }
@@ -86,6 +90,7 @@ async function ensureInitialized(db) {
   if (!schedule) {
 
     await db.collection('prayer_schedule').insertOne({
+
       id: uuidv4(),
       fajr: '04:30',
       dhuhr: '12:00',
@@ -93,23 +98,26 @@ async function ensureInitialized(db) {
       maghrib: '18:05',
       isha: '19:15',
       updatedAt: new Date()
+
     })
 
   }
 
   // SOCIAL MEDIA
-  const social = await db.collection('social_media').findOne()
+  let social = await db.collection('social_media').findOne()
 
   if (!social) {
 
-    await db.collection('social_media').insertOne({
+    social = {
       id: uuidv4(),
       youtube: "",
       instagram: "",
       tiktok: "",
       facebook: "",
       updatedAt: new Date()
-    })
+    }
+
+    await db.collection('social_media').insertOne(social)
 
   }
 
@@ -133,8 +141,11 @@ async function verifyToken(request, db) {
 }
 
 function getRoute(params) {
+
   const path = params?.path || []
+
   return '/' + path.join('/')
+
 }
 
 export async function GET(request, { params }) {
@@ -142,6 +153,7 @@ export async function GET(request, { params }) {
   try {
 
     const db = await getDb()
+
     await ensureInitialized(db)
 
     const route = getRoute(params)
@@ -166,8 +178,23 @@ export async function GET(request, { params }) {
 
     if (route === '/social-media') {
 
-      const data = await db.collection('social_media')
+      let data = await db.collection('social_media')
         .findOne({}, { projection: { _id: 0 } })
+
+      if (!data) {
+
+        data = {
+          id: uuidv4(),
+          youtube: "",
+          instagram: "",
+          tiktok: "",
+          facebook: "",
+          updatedAt: new Date()
+        }
+
+        await db.collection('social_media').insertOne(data)
+
+      }
 
       return NextResponse.json({ success: true, data })
 
@@ -201,7 +228,10 @@ export async function GET(request, { params }) {
 
     console.error(error)
 
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500 }
+    )
 
   }
 
@@ -212,14 +242,18 @@ export async function POST(request, { params }) {
   try {
 
     const db = await getDb()
+
     const route = getRoute(params)
+
     const body = await request.json()
 
     if (route === '/auth/login') {
 
       const { username, password } = body
 
-      const hash = crypto.createHash('sha256').update(password).digest('hex')
+      const hash = crypto.createHash('sha256')
+        .update(password)
+        .digest('hex')
 
       const admin = await db.collection('admin')
         .findOne({ username, passwordHash: hash })
@@ -236,11 +270,13 @@ export async function POST(request, { params }) {
       const token = 'admin_' + uuidv4()
 
       await db.collection('sessions').insertOne({
+
         id: uuidv4(),
         token,
         adminId: admin.id,
         active: true,
         createdAt: new Date()
+
       })
 
       return NextResponse.json({ success: true, token })
@@ -254,9 +290,11 @@ export async function POST(request, { params }) {
       }
 
       const item = {
+
         id: uuidv4(),
         ...body,
         createdAt: new Date()
+
       }
 
       await db.collection('gallery').insertOne(item)
@@ -272,9 +310,11 @@ export async function POST(request, { params }) {
       }
 
       const item = {
+
         id: uuidv4(),
         ...body,
         createdAt: new Date()
+
       }
 
       await db.collection('events').insertOne(item)
@@ -289,7 +329,10 @@ export async function POST(request, { params }) {
 
     console.error(error)
 
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500 }
+    )
 
   }
 
@@ -300,6 +343,7 @@ export async function PUT(request, { params }) {
   try {
 
     const db = await getDb()
+
     const route = getRoute(params)
 
     if (!await verifyToken(request, db)) {
@@ -348,7 +392,10 @@ export async function PUT(request, { params }) {
 
     console.error(error)
 
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500 }
+    )
 
   }
 
