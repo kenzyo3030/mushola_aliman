@@ -105,10 +105,10 @@ async function ensureInitialized(db) {
     await db.collection('social_media').insertOne({
 
       id: uuidv4(),
-      youtube: '',
-      instagram: '',
-      tiktok: '',
-      facebook: '',
+      youtube: "",
+      instagram: "",
+      tiktok: "",
+      facebook: "",
       updatedAt: new Date()
 
     })
