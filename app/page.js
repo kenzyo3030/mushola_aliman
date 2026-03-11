@@ -54,11 +54,15 @@ export default function HomePage() {
   const [socialMedia, setSocialMedia] = useState({})
   const [loading, setLoading] = useState(true)
   const [currentTime, setCurrentTime] = useState('')
+  const [currentDate, setCurrentDate] = useState('')
+  const [currentYear, setCurrentYear] = useState(2024)
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date()
       setCurrentTime(now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
+      setCurrentDate(now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }))
+      setCurrentYear(now.getFullYear())
     }
     updateTime()
     const interval = setInterval(updateTime, 1000)
@@ -158,7 +162,7 @@ export default function HomePage() {
           <div className="text-center mb-10">
             <p className="font-arabic text-yellow-300 text-2xl mb-1">أوقات الصلاة</p>
             <h2 className="font-serif-custom text-3xl font-bold text-white">Jadwal Waktu Sholat</h2>
-            <p className="text-green-200 mt-2">{new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <p className="text-green-200 mt-2">{currentDate || 'Memuat tanggal...'}</p>
           </div>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -228,7 +232,7 @@ export default function HomePage() {
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-400 rounded-full opacity-20 blur-xl"></div>
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-green-400 rounded-full opacity-20 blur-xl"></div>
               <div className="absolute top-4 right-4 bg-white rounded-xl shadow-lg p-3 text-center">
-                <p className="text-2xl font-bold text-green-700">{new Date().getFullYear() - parseInt(profile.yearEstablished || '1975')}+</p>
+                <p className="text-2xl font-bold text-green-700">{currentYear - parseInt(profile.yearEstablished || '1975')}+</p>
                 <p className="text-xs text-green-600">Tahun Berdiri</p>
               </div>
             </div>

@@ -7,8 +7,10 @@ export default function Footer() {
   const [profile, setProfile] = useState({})
   const [socialMedia, setSocialMedia] = useState({})
   const [schedule, setSchedule] = useState({})
+  const [currentYear, setCurrentYear] = useState(2024)
 
   useEffect(() => {
+    setCurrentYear(new Date().getFullYear())
     fetch('/api/mosque-profile').then(r => r.json()).then(d => { if (d.success) setProfile(d.data || {}) }).catch(() => {})
     fetch('/api/social-media').then(r => r.json()).then(d => { if (d.success) setSocialMedia(d.data || {}) }).catch(() => {})
     fetch('/api/prayer-schedule').then(r => r.json()).then(d => { if (d.success) setSchedule(d.data || {}) }).catch(() => {})
@@ -122,7 +124,7 @@ export default function Footer() {
         
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-green-400">
-            &copy; {new Date().getFullYear()} {profile.name || 'Mushola Al-Iman'}. Semua hak dilindungi.
+            &copy; {currentYear} {profile.name || 'Mushola Al-Iman'}. Semua hak dilindungi.
           </p>
           <p className="text-sm text-green-400 mt-2 md:mt-0">
             Dibangun dengan <span className="text-red-400">♥</span> untuk ummat Islam
