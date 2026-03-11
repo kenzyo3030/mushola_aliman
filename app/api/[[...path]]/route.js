@@ -30,7 +30,8 @@ async function getDb() {
 
 async function ensureInitialized(db) {
 
-  const adminCount = await db.collection('admin').countDocuments({})
+  // ADMIN
+  const adminCount = await db.collection('admin').countDocuments()
 
   if (adminCount === 0) {
 
@@ -55,12 +56,12 @@ async function ensureInitialized(db) {
 
   }
 
-  const profile = await db.collection('mosque_profile').findOne({})
+  // MOSQUE PROFILE
+  const profile = await db.collection('mosque_profile').findOne()
 
   if (!profile) {
 
     await db.collection('mosque_profile').insertOne({
-
       id: uuidv4(),
       name: 'Mushola Al-Iman',
       arabicName: 'مسجد الإخلاص',
@@ -75,17 +76,16 @@ async function ensureInitialized(db) {
       vision: 'Menjadi mushola yang membawa rahmat bagi masyarakat',
       mission: 'Membangun generasi Qurani',
       updatedAt: new Date()
-
     })
 
   }
 
-  const schedule = await db.collection('prayer_schedule').findOne({})
+  // PRAYER SCHEDULE
+  const schedule = await db.collection('prayer_schedule').findOne()
 
   if (!schedule) {
 
     await db.collection('prayer_schedule').insertOne({
-
       id: uuidv4(),
       fajr: '04:30',
       dhuhr: '12:00',
@@ -93,24 +93,22 @@ async function ensureInitialized(db) {
       maghrib: '18:05',
       isha: '19:15',
       updatedAt: new Date()
-
     })
 
   }
 
-  const social = await db.collection('social_media').findOne({})
+  // SOCIAL MEDIA
+  const social = await db.collection('social_media').findOne()
 
   if (!social) {
 
     await db.collection('social_media').insertOne({
-
       id: uuidv4(),
       youtube: "",
       instagram: "",
       tiktok: "",
       facebook: "",
       updatedAt: new Date()
-
     })
 
   }
@@ -134,16 +132,19 @@ async function verifyToken(request, db) {
 
 }
 
-export async function GET(request, { params }) {
-
+function getRoute(params) {
   const path = params?.path || []
-  const route = '/' + path.join('/')
+  return '/' + path.join('/')
+}
+
+export async function GET(request, { params }) {
 
   try {
 
     const db = await getDb()
-
     await ensureInitialized(db)
+
+    const route = getRoute(params)
 
     if (route === '/mosque-profile') {
 
@@ -208,12 +209,10 @@ export async function GET(request, { params }) {
 
 export async function POST(request, { params }) {
 
-  const path = params?.path || []
-  const route = '/' + path.join('/')
-
   try {
 
     const db = await getDb()
+    const route = getRoute(params)
     const body = await request.json()
 
     if (route === '/auth/login') {
@@ -237,13 +236,11 @@ export async function POST(request, { params }) {
       const token = 'admin_' + uuidv4()
 
       await db.collection('sessions').insertOne({
-
         id: uuidv4(),
         token,
         adminId: admin.id,
         active: true,
         createdAt: new Date()
-
       })
 
       return NextResponse.json({ success: true, token })
@@ -300,12 +297,10 @@ export async function POST(request, { params }) {
 
 export async function PUT(request, { params }) {
 
-  const path = params?.path || []
-  const route = '/' + path.join('/')
-
   try {
 
     const db = await getDb()
+    const route = getRoute(params)
 
     if (!await verifyToken(request, db)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
