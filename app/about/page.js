@@ -49,8 +49,8 @@ export default function AboutPage() {
             {/* Info Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               {[
-                { label: 'Tahun Berdiri', value: profile.yearEstablished || '2025', icon: '🏛️', color: 'bg-green-50 border-green-200' },
-                { label: 'Kapasitas Jamaah', value: `${profile.capacity || '100'} Orang`, icon: '🧕', color: 'bg-yellow-50 border-yellow-200' },
+                { label: 'Tahun Berdiri', value: profile.yearEstablished || '1975', icon: '🏛️', color: 'bg-green-50 border-green-200' },
+                { label: 'Kapasitas Jamaah', value: `${profile.capacity || '1000'} Orang`, icon: '🧕', color: 'bg-yellow-50 border-yellow-200' },
                 { label: 'Imam Masjid', value: profile.imamName || 'Ustadz Ahmad Fauzi', icon: '📿', color: 'bg-green-50 border-green-200' },
                 { label: 'Khatib Jumat', value: profile.khatibName || 'Ustadz Muhammad Ridwan', icon: '🎤', color: 'bg-yellow-50 border-yellow-200' },
               ].map(item => (
