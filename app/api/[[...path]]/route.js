@@ -67,7 +67,7 @@ async function ensureInitialized(db) {
 
       id: uuidv4(),
       name: 'Mushola Al-Iman',
-      arabicName: '\u0645\u0633\u062c\u062f \u0627\u0644\u0625\u062e\u0644\u0627\u0635',
+      arabicName: 'مصلى الإيمان',
       description: 'Mushola Al-Iman adalah tempat ibadah.',
       address: 'Jl. Raya Islam No.1',
       phone: '+62 21 1234567',
