@@ -401,8 +401,8 @@ export default function AdminDashboard() {
                 </div>
                 <TextArea label="Deskripsi" value={profile.description} onChange={v => setProfile({...profile, description: v})} rows={4} placeholder="Deskripsi masjid..." />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <InputField label="Tahun Berdiri" value={profile.yearEstablished} onChange={v => setProfile({...profile, yearEstablished: v})} placeholder="1975" />
-                  <InputField label="Kapasitas Jamaah" value={profile.capacity} onChange={v => setProfile({...profile, capacity: v})} placeholder="1000" />
+                  <InputField label="Tahun Berdiri" value={profile.yearEstablished} onChange={v => setProfile({...profile, yearEstablished: v})} placeholder="2025" />
+                  <InputField label="Kapasitas Jamaah" value={profile.capacity} onChange={v => setProfile({...profile, capacity: v})} placeholder="100" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <InputField label="Nama Imam" value={profile.imamName} onChange={v => setProfile({...profile, imamName: v})} placeholder="Ustadz..." />

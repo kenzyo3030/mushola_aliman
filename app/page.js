@@ -196,8 +196,8 @@ export default function HomePage() {
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 {[
-                  { label: 'Didirikan', value: profile.yearEstablished || '1975', icon: '🏛️' },
-                  { label: 'Kapasitas', value: `${profile.capacity || '1000'} Jamaah`, icon: '👥' },
+                  { label: 'Didirikan', value: profile.yearEstablished || '2025', icon: '🏛️' },
+                  { label: 'Kapasitas', value: `${profile.capacity || '100'} Jamaah`, icon: '👥' },
                   { label: 'Imam', value: profile.imamName?.split(',')[0] || 'Ustadz Ahmad', icon: '📝' },
                   { label: 'Lokasi', value: profile.address?.split(',')[0] || 'Jakarta', icon: '📍' },
                 ].map(item => (
@@ -228,7 +228,7 @@ export default function HomePage() {
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-400 rounded-full opacity-20 blur-xl"></div>
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-green-400 rounded-full opacity-20 blur-xl"></div>
               <div className="absolute top-4 right-4 bg-white rounded-xl shadow-lg p-3 text-center">
-                <p className="text-2xl font-bold text-green-700">{new Date().getFullYear() - parseInt(profile.yearEstablished || '1975')}+</p>
+                <p className="text-2xl font-bold text-green-700">{new Date().getFullYear() - parseInt(profile.yearEstablished || '2025')}+</p>
                 <p className="text-xs text-green-600">Tahun Berdiri</p>
               </div>
             </div>

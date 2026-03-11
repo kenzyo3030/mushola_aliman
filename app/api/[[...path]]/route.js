@@ -74,8 +74,8 @@ async function ensureInitialized(db) {
       email: 'info@mushola-aliman.id',
       imamName: 'Ustadz Ahmad Fauzi',
       khatibName: 'Ustadz Muhammad Ridwan',
-      yearEstablished: '1975',
-      capacity: '1000',
+      yearEstablished: '2025',
+      capacity: '100',
       vision: 'Menjadi mushola yang membawa rahmat bagi masyarakat',
       mission: 'Membangun generasi Qurani',
       updatedAt: new Date()
